@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-webapi-anuncios", "dotnet-webapi-anuncios.csproj", "{940A26CF-8282-F26D-A0F9-E38FD978DBBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{940A26CF-8282-F26D-A0F9-E38FD978DBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{940A26CF-8282-F26D-A0F9-E38FD978DBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{940A26CF-8282-F26D-A0F9-E38FD978DBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{940A26CF-8282-F26D-A0F9-E38FD978DBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3AE87283-1A78-4A30-B321-D9F1CEED3D8C}
+	EndGlobalSection
+EndGlobal

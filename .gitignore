@@ -1,0 +1,29 @@
+# Diretório de saída da build
+bin/
+obj/
+
+# Configurações do usuário do Visual Studio
+.vs/
+
+# Arquivos de log
+*.log
+
+# Configurações locais do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Pacotes NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Arquivos gerados pelo Rider ou outros IDEs
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Configurações do dotnet CLI
+**/project.lock.json
+**/project.fragment.lock.json
