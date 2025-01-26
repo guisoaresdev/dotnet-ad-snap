@@ -40,6 +40,15 @@ cd dotnet-webapi-anuncios
 Abra o SSMS (ou outra ferramenta de sua preferência para SQL Server).
 Crie um novo banco de dados chamado "anuncios" (ou o nome de sua preferência).
 
+5. Altere a Connection String no arquivo appsetings.Development.json:
+```
+...
+"ConnectionStrings": {
+"DefaultConnection": "Data Source=Makarov\\SQLEXPRESS;Initial Catalog=anuncios;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+},
+...
+```
+
 4. Rode as migrations:
 ```
 dotnet ef database update

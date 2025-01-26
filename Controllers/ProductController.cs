@@ -1,7 +1,9 @@
 using dotnet_webapi_anuncios.Data;
 using dotnet_webapi_anuncios.Dtos.Product;
+using dotnet_webapi_anuncios.Interfaces;
 using dotnet_webapi_anuncios.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_webapi_anuncios.Controllers
 {
@@ -9,22 +11,23 @@ namespace dotnet_webapi_anuncios.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private ApplicationDBContext _context;
+        private readonly IProductRepository _productRepo;
 
-        public ProductController(ApplicationDBContext context)
+        public ProductController(IProductRepository productRepo)
         {
-            _context = context;
+            _productRepo = productRepo;
         }
 
         [HttpGet]
-        public IActionResult GetAll() {
-            var products = _context.Products.Select(s => s.ToProductDto()).ToList();
-            return Ok(products);
+        public async Task<IActionResult> GetAll() {
+            var products = await _productRepo.GetAllAsync();
+            var productDto = products.Select(s => s.ToProductDto());
+            return Ok(productDto);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id) {
-            var product = _context.Products.Find(id);
+        public async Task<IActionResult> GetById([FromRoute] int id) {
+            var product = await _productRepo.GetByIdAsync(id);
             if (product == null) {
                 return NotFound();
             }
@@ -32,42 +35,29 @@ namespace dotnet_webapi_anuncios.Controllers
         }
         
         [HttpPost]
-        public IActionResult Create([FromBody] CreateProductRequestDto productDto) {
+        public async Task<IActionResult> Create([FromBody] CreateProductRequestDto productDto) {
             var productModel = productDto.ToProductFromCreateDto();
-            _context.Products.Add(productModel);
-            _context.SaveChanges();
+            await _productRepo.CreateAsync(productModel);
             return CreatedAtAction(nameof(GetById), new {id = productModel.Id }, productModel.ToProductDto());
         }
         
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateProductRequestDto updateDto) {
-            var productModel = _context.Products.FirstOrDefault(x => x.Id == id);
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProductRequestDto updateDto) {
+            var productModel = await _productRepo.UpdateAsync(id, updateDto);
             if (productModel == null) {
                 return NotFound();
             }
-            //TODO: Implementar Repository
-            productModel.Nome = updateDto.Nome;
-            productModel.Valor = updateDto.Valor;
-            productModel.Cidade = updateDto.Cidade;
-            productModel.Categoria = updateDto.Categoria;
-            productModel.Modelo = updateDto.Modelo;
-            productModel.Condicao = updateDto.Condicao;
-            productModel.Quantidade = updateDto.Quantidade;
-
-            _context.SaveChanges();
             return Ok(productModel.ToProductDto());
         }
         
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id) {
-            var productModel = _context.Products.FirstOrDefault(x => x.Id == id);
+        public async Task<IActionResult> Delete([FromRoute] int id) {
+            var productModel = await _productRepo.DeleteAsync(id);
             if (productModel == null) {
                 return NotFound();
             }
-            _context.Remove(productModel);
-            _context.SaveChanges();
             return Ok(productModel.ToProductDto());
         }
     }

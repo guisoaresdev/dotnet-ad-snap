@@ -1,7 +1,9 @@
 using dotnet_webapi_anuncios.Data;
 using dotnet_webapi_anuncios.Dtos.Service;
 using dotnet_webapi_anuncios.Mappers;
+using dotnet_webapi_anuncios.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_webapi_anuncios.Controllers
 {
@@ -9,22 +11,23 @@ namespace dotnet_webapi_anuncios.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private ApplicationDBContext _context;
+        private readonly ServiceRepository _serviceRepo;
         
-        public ServiceController(ApplicationDBContext context)
+        public ServiceController(ServiceRepository serviceRepo)
         {
-            _context = context;
+            _serviceRepo = serviceRepo;
         }
         
         [HttpGet]
-        public IActionResult GetAll() {
-            var service = _context.Services.Select(s => s.ToServiceDto()).ToList();
-            return Ok(service);
+        public async Task<IActionResult> GetAll() {
+            var services = await _serviceRepo.GetAllAsync();
+            var serviceDto = services.Select(s => s.ToServiceDto()); 
+            return Ok(serviceDto);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id) {
-            var service = _context.Services.Find(id);
+        public async Task<IActionResult> GetById([FromRoute] int id) {
+            var service = await _serviceRepo.GetByIdAsync(id);
             if (service == null) {
                 return NotFound();
             }
@@ -32,38 +35,29 @@ namespace dotnet_webapi_anuncios.Controllers
         }
         
         [HttpPost]
-        public IActionResult Create([FromBody] CreateServiceRequestDto serviceDto) {
+        public async Task<IActionResult> Create([FromBody] CreateServiceRequestDto serviceDto) {
             var serviceModel = serviceDto.ToServiceFromCreateDto();
-            _context.Services.Add(serviceModel);
-            _context.SaveChanges();
+            await _serviceRepo.CreateAsync(serviceModel);
             return CreatedAtAction(nameof(GetById), new {id = serviceModel.Id }, serviceModel.ToServiceDto());
         }
         
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateServiceRequestDto updateDto) {
-            var serviceModel = _context.Services.FirstOrDefault(x => x.Id == id);
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateServiceRequestDto updateDto) {
+            var serviceModel = await _serviceRepo.UpdateAsync(id, updateDto);
             if (serviceModel == null) {
                 return NotFound();
             }
-            //TODO: Implementar Repository
-            serviceModel.Nome = updateDto.Nome;
-            serviceModel.Valor = updateDto.Valor;
-            serviceModel.Cidade = updateDto.Cidade;
-
-            _context.SaveChanges();
             return Ok(serviceModel.ToServiceDto());
         }
         
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id) {
-            var serviceModel = _context.Services.FirstOrDefault(x => x.Id == id);
+        public async Task<IActionResult> Delete([FromRoute] int id) {
+            var serviceModel = await _serviceRepo.DeleteAsync(id);
             if (serviceModel == null) {
                 return NotFound();
             }
-            _context.Remove(serviceModel);
-            _context.SaveChanges();
             return Ok(serviceModel.ToServiceDto());
         }
 
