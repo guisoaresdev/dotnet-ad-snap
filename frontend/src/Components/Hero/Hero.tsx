@@ -123,9 +123,9 @@ const Hero = (props: Props) => {
                 required
               >
                 <option value="">Selecione</option>
-                <option value="São Paulo">São Paulo</option>
-                <option value="Rio de Janeiro">Rio de Janeiro</option>
-                <option value="Belo Horizonte">Belo Horizonte</option>
+                <option value="SaoPaulo">São Paulo</option>
+                <option value="RioDeJaneiro">Rio de Janeiro</option>
+                <option value="BeloHorizonte">Belo Horizonte</option>
               </select>
             </div>
 
@@ -142,9 +142,9 @@ const Hero = (props: Props) => {
                     required
                   >
                     <option value="">Selecione</option>
-                    <option value="Eletrônicos">Eletrônicos</option>
-                    <option value="Vestuário">Vestuário</option>
-                    <option value="Móveis">Móveis</option>
+                    <option value="Eletronicos">Eletrônicos</option>
+                    <option value="Vestuario">Vestuário</option>
+                    <option value="Moveis">Móveis</option>
                   </select>
                 </div>
                 <div>
@@ -157,9 +157,9 @@ const Hero = (props: Props) => {
                     required
                   >
                     <option value="">Selecione</option>
-                    <option value="Smart TV UltraView 4K 55">Smart TV UltraView 4K 55"</option>
-                    <option value="Jaqueta Puffer Windproof">Jaqueta Puffer Windproof</option>
-                    <option value="Mesa de Jantar Madeira Prime 6 Lugares">Mesa de Jantar Madeira Prime 6 Lugares</option>
+                    <option value="SmartTV">Smart TV UltraView 4K 55"</option>
+                    <option value="Jaqueta">Jaqueta Puffer Windproof</option>
+                    <option value="MesaJantar">Mesa de Jantar Madeira Prime 6 Lugares</option>
                   </select>
                 </div>
                 <div>

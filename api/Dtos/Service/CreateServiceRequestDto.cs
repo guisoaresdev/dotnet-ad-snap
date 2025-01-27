@@ -19,7 +19,7 @@ namespace dotnet_webapi_anuncios.Dtos.Service
         public decimal Valor { get; set; }
 
         [Required]
-        [EnumDataType(typeof (Cidade), ErrorMessage = "Selecione uma cidade válida.")]
+        [ValidEnum(typeof (Cidade), ErrorMessage = "Selecione uma cidade válida.")]
         public string Cidade { get; set; } = string.Empty;
     }
 }

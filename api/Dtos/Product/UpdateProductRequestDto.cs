@@ -23,19 +23,19 @@ namespace dotnet_webapi_anuncios.Dtos.Product
         public decimal Valor { get; set; }
 
         [Required]
-        [EnumDataType(typeof(Cidade), ErrorMessage = "Selecione uma cidade válida.")]
+        [ValidEnum(typeof(Cidade), ErrorMessage = "Selecione uma cidade válida.")]
         public string Cidade { get; set; } = string.Empty;
 
         [Required]
-        [EnumDataType(typeof(Categoria), ErrorMessage = "Selecione uma Categoria válida.")]
+        [ValidEnum(typeof(Categoria), ErrorMessage = "Selecione uma Categoria válida.")]
         public string Categoria { get; set; } = string.Empty;
 
         [Required]
-        [EnumDataType(typeof (Modelo), ErrorMessage = "Selecione um Modelo válido.")]
+        [ValidEnum(typeof (Modelo), ErrorMessage = "Selecione um Modelo válido.")]
         public string Modelo { get; set; } = string.Empty;
 
         [Required]
-        [EnumDataType(typeof(Condicao), ErrorMessage = "Selecione uma condição válida para o produto.")]
+        [ValidEnum(typeof(Condicao), ErrorMessage = "Selecione uma condição válida para o produto.")]
         public string Condicao { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "A quantidade deve ser no mínimo 1 unidade.")]

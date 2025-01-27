@@ -40,9 +40,9 @@ cd dotnet-webapi-anuncios
 Abra o SSMS (ou outra ferramenta de sua preferência para SQL Server).
 Crie um novo banco de dados chamado "anuncios" (ou o nome de sua preferência).
 
-5. Altere a Connection String no arquivo appsetings.Development.json:
+4. Altere a Connection String no arquivo appsetings.Development.json dentro da pasta api:
 
-5.1. Você deve selecionar com o botão direito o banco de dados "anuncios" no SSMS e verificar em propriedades o propriétario do banco e substituir na string de conexão
+4.1. Você deve selecionar com o botão direito no banco de dados "anuncios" no SSMS e verificar em propriedades o propriétario do banco e substituir na string de conexão
 ```
 ...
 "ConnectionStrings": {
@@ -67,8 +67,26 @@ dotnet ef database update
 dotnet restore
 ```
 
-6. Inicie o servidor de desenvolvimento:
-
+6. Dentro da pasta do frontend, copie o .env.example para um novo arquivo .env:
 ```
-dotnet watch run
+cp .env.example .env
+```
+
+7. Substitua a URL da API para que o front consiga realizar as requisições: 
+```
+REACT_APP_API_URL="http://localhost:5254/api"
+```
+
+8. Dentro da pasta frontend, rode a aplicação através do comando:
+```
+npm run start:all
+```
+
+Isso irá levantar tanto a API Web usando .NET, quanto o frontend em React.
+
+### Outros comandos
+
+Rodar a API:
+```
+npm run start:api
 ```
