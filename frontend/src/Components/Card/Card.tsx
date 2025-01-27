@@ -9,7 +9,6 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ id, searchResult }: Props): JSX.Element => {
-  // Verifica se é um Produto ou Serviço com base na propriedade 'categoria'
   const isProduto = (result: Produto | Servico): result is Produto => {
     return (result as Produto).categoria !== undefined;
   };
@@ -21,10 +20,7 @@ const Card: React.FC<Props> = ({ id, searchResult }: Props): JSX.Element => {
       id={id}
     >
       {isProduto(searchResult) ? (
-        // Caso seja Produto
-        <div className="font-bold text-center text-veryDarkViolet md:text-left"
-        >
-          {/* Exibe as informações específicas de Produto */}
+        <div className="font-bold text-center text-veryDarkViolet md:text-left">
           {searchResult.nome} - R$ {searchResult.valor.toFixed(2)} <br />
           Cidade: {searchResult.cidade} <br />
           Categoria: {searchResult.categoria} <br />
@@ -32,8 +28,7 @@ const Card: React.FC<Props> = ({ id, searchResult }: Props): JSX.Element => {
           Quantidade: {searchResult.quantidade}
         </div>
       ) : (
-        // Caso seja Serviço
-        <div className="font-bold text-center text-veryDarkViolet md:text-left" >
+        <div className="font-bold text-center text-veryDarkViolet md:text-left">
           {searchResult.nome} - R$ {searchResult.valor.toFixed(2)} <br />
           Cidade: {searchResult.cidade}
         </div>
@@ -43,3 +38,4 @@ const Card: React.FC<Props> = ({ id, searchResult }: Props): JSX.Element => {
 };
 
 export default Card;
+

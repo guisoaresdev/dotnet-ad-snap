@@ -18,7 +18,9 @@ const Hero = (props: Props) => {
     quantidade: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -27,9 +29,7 @@ const Hero = (props: Props) => {
     try {
       const response = await createAdAPI(adType, formData);
 
-      // Verifica se a resposta tem erro de validação
-      if ('errors' in response) {
-        // Exibir um toast para cada erro de validação
+      if ("errors" in response) {
         for (const field in response.errors) {
           response.errors[field].forEach((errorMessage: string) => {
             toast.error(`${field}: ${errorMessage}`);
@@ -59,7 +59,9 @@ const Hero = (props: Props) => {
     <section id="hero">
       <div className="container flex flex-col mx-auto p-8">
         <div className="flex flex-col space-y-10 mb-10">
-          <h1 className="text-5xl font-bold text-center">Cadastre um Anúncio</h1>
+          <h1 className="text-5xl font-bold text-center">
+            Cadastre um Anúncio
+          </h1>
           <div className="flex justify-center space-x-4">
             <button
               className={`py-2 px-4 text-xl font-bold ${adType === "product" ? "bg-lightGreen text-white" : "bg-gray-300"} rounded hover:opacity-70`}
@@ -90,7 +92,9 @@ const Hero = (props: Props) => {
               />
             </div>
             <div>
-              <label className="block text-xl font-bold">Data de Publicação</label>
+              <label className="block text-xl font-bold">
+                Data de Publicação
+              </label>
               <input
                 type="date"
                 name="dataPublicacao"
@@ -159,7 +163,9 @@ const Hero = (props: Props) => {
                     <option value="">Selecione</option>
                     <option value="SmartTV">Smart TV UltraView 4K 55"</option>
                     <option value="Jaqueta">Jaqueta Puffer Windproof</option>
-                    <option value="MesaJantar">Mesa de Jantar Madeira Prime 6 Lugares</option>
+                    <option value="MesaJantar">
+                      Mesa de Jantar Madeira Prime 6 Lugares
+                    </option>
                   </select>
                 </div>
                 <div>
@@ -192,12 +198,21 @@ const Hero = (props: Props) => {
                 </div>
               </>
             )}
-
-            {/* Botões */}
             <div className="flex justify-end space-x-4">
               <button
                 type="button"
-                onClick={() => setFormData({ nome: "", dataPublicacao: "", valor: "", cidade: "", categoria: "", modelo: "", condicao: "", quantidade: "" })}
+                onClick={() =>
+                  setFormData({
+                    nome: "",
+                    dataPublicacao: "",
+                    valor: "",
+                    cidade: "",
+                    categoria: "",
+                    modelo: "",
+                    condicao: "",
+                    quantidade: "",
+                  })
+                }
                 className="py-2 px-4 bg-gray-300 rounded hover:opacity-70"
               >
                 Limpar
