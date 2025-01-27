@@ -1,6 +1,6 @@
 # Diretório de saída da build
-bin/
-obj/
+api/bin/
+api/obj/
 
 # Configurações do usuário do Visual Studio
 .vs/

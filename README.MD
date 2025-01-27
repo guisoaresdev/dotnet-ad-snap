@@ -41,6 +41,8 @@ Abra o SSMS (ou outra ferramenta de sua preferência para SQL Server).
 Crie um novo banco de dados chamado "anuncios" (ou o nome de sua preferência).
 
 5. Altere a Connection String no arquivo appsetings.Development.json:
+
+5.1. Você deve selecionar com o botão direito o banco de dados "anuncios" no SSMS e verificar em propriedades o propriétario do banco e substituir na string de conexão
 ```
 ...
 "ConnectionStrings": {
@@ -48,6 +50,11 @@ Crie um novo banco de dados chamado "anuncios" (ou o nome de sua preferência).
 },
 ...
 ```
+
+Neste trecho, logo após Data Source:
+```
+"DefaultConnection": "Data Source=Makarov\\SQLEXPRESS;
+````
 
 4. Rode as migrations:
 ```
