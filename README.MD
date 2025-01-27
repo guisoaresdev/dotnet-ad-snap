@@ -44,6 +44,9 @@ Crie um novo banco de dados chamado "anuncios" (ou o nome de sua preferência).
 
 4.1. Você deve selecionar com o botão direito no banco de dados "anuncios" no SSMS e verificar em propriedades o propriétario do banco e substituir na string de conexão
 ```
+(Nas propriedades do BD)
+Proprietário: Makarov\gui_c
+
 ...
 "ConnectionStrings": {
 "DefaultConnection": "Data Source=Makarov\\SQLEXPRESS;Initial Catalog=anuncios;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
@@ -56,32 +59,36 @@ Neste trecho, logo após Data Source:
 "DefaultConnection": "Data Source=Makarov\\SQLEXPRESS;
 ````
 
-4. Rode as migrations:
+5. Entre na pasta api e rode as migrations:
 ```
 dotnet ef database update
 ```
 
-5. Restaure as dependências do projeto:
+6. Restaure as dependências do projeto:
 
 ```
 dotnet restore
 ```
 
-6. Dentro da pasta do frontend, copie o .env.example para um novo arquivo .env:
+7. Dentro da pasta do frontend, copie o .env.example para um novo arquivo .env:
 ```
 cp .env.example .env
 ```
 
-7. Substitua a URL da API para que o front consiga realizar as requisições: 
+8. Substitua a URL da API para que o front consiga realizar as requisições: 
 ```
 REACT_APP_API_URL="http://localhost:5254/api"
 ```
 
-8. Dentro da pasta frontend, rode a aplicação através do comando:
+9. Instale as dependências do front:
+```
+npm install
+```
+
+10. Execute a aplicação através do comando:
 ```
 npm run start:all
 ```
-
 Isso irá levantar tanto a API Web usando .NET, quanto o frontend em React.
 
 ### Outros comandos
