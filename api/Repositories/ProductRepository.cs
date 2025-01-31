@@ -1,5 +1,6 @@
 using dotnet_webapi_anuncios.Data;
 using dotnet_webapi_anuncios.Dtos.Product;
+using dotnet_webapi_anuncios.Helpers;
 using dotnet_webapi_anuncios.Interfaces;
 using dotnet_webapi_anuncios.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,31 @@ namespace dotnet_webapi_anuncios.Repositories
             _context = applicationDbContext;
         }
         
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(QueryObject queryParams)
         {
-            return await _context.Products.ToListAsync();
+            var products = _context.Products.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(queryParams.Valor)) {
+                products = products.Where(s => s.Valor.Equals(queryParams.Valor));
+            }
+            if (!string.IsNullOrWhiteSpace(queryParams.Cidade)) {
+                products = products.Where(s => s.Cidade.Contains(queryParams.Cidade));
+            }
+            if (!string.IsNullOrWhiteSpace(queryParams.SortBy)) {
+                if (queryParams.SortBy.Equals("Valor", StringComparison.OrdinalIgnoreCase)) {
+                    products = queryParams.IsDescending ? products.OrderByDescending(p => p.Valor) : products.OrderBy(p => p.Valor);
+                }
+                if (queryParams.SortBy.Equals("Cidade", StringComparison.OrdinalIgnoreCase)) {
+                    products = queryParams.IsDescending ? products.OrderByDescending(p => p.Cidade) : products.OrderBy(p => p.Cidade);
+                }
+                if (queryParams.SortBy.Equals("Categoria", StringComparison.OrdinalIgnoreCase)) {
+                    products = queryParams.IsDescending ? products.OrderByDescending(p => p.Categoria) : products.OrderBy(p => p.Categoria);
+                }
+                if (queryParams.SortBy.Equals("Condicao", StringComparison.OrdinalIgnoreCase)) {
+                    products = queryParams.IsDescending ? products.OrderByDescending(p => p.Condicao) : products.OrderBy(p => p.Condicao);
+                }
+            }
+            var skipNumber = (queryParams.PageNumber - 1) * queryParams.PageSize;
+            return await products.Skip(skipNumber).Take(queryParams.PageSize).ToListAsync();
         }
 
         public async Task<Product?> GetByIdAsync(int id)

@@ -1,4 +1,5 @@
 using dotnet_webapi_anuncios.Dtos.Service;
+using dotnet_webapi_anuncios.Helpers;
 using dotnet_webapi_anuncios.Interfaces;
 using dotnet_webapi_anuncios.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,8 @@ namespace dotnet_webapi_anuncios.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            var services = await _serviceRepo.GetAllAsync();
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject queryParams) {
+            var services = await _serviceRepo.GetAllAsync(queryParams);
             var serviceDto = services.Select(s => s.ToServiceDto()); 
             return Ok(serviceDto);
         }

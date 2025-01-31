@@ -1,5 +1,6 @@
 using dotnet_webapi_anuncios.Data;
 using dotnet_webapi_anuncios.Dtos.Product;
+using dotnet_webapi_anuncios.Helpers;
 using dotnet_webapi_anuncios.Interfaces;
 using dotnet_webapi_anuncios.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +20,8 @@ namespace dotnet_webapi_anuncios.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            var products = await _productRepo.GetAllAsync();
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject queryParams) {
+            var products = await _productRepo.GetAllAsync(queryParams);
             var productDto = products.Select(s => s.ToProductDto());
             return Ok(productDto);
         }

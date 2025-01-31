@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnet_webapi_anuncios.Data;
 using dotnet_webapi_anuncios.Dtos.Service;
+using dotnet_webapi_anuncios.Helpers;
 using dotnet_webapi_anuncios.Interfaces;
 using dotnet_webapi_anuncios.Models;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +38,26 @@ namespace dotnet_webapi_anuncios.Repositories
             return serviceModel;
         }
 
-        public async Task<List<Service>> GetAllAsync()
+        public async Task<List<Service>> GetAllAsync(QueryObject queryParams)
         {
-            return await _context.Services.ToListAsync();
+            var services = _context.Services.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(queryParams.Valor)) {
+                services = services.Where(s => s.Valor.Equals(queryParams.Valor));
+            }
+            if (!string.IsNullOrWhiteSpace(queryParams.Cidade)) {
+                services = services.Where(s => s.Cidade.Contains(queryParams.Cidade));
+            }
+            if (!string.IsNullOrWhiteSpace(queryParams.SortBy)) {
+                if (queryParams.SortBy.Equals("Valor", StringComparison.OrdinalIgnoreCase)) {
+                    services = queryParams.IsDescending ? services.OrderByDescending(p => p.Valor) : services.OrderBy(p => p.Valor);
+                }
+                if (queryParams.SortBy.Equals("Cidade", StringComparison.OrdinalIgnoreCase)) {
+                    services = queryParams.IsDescending ? services.OrderByDescending(p => p.Cidade) : services.OrderBy(p => p.Cidade);
+                }
+
+            }
+            var skipNumber = (queryParams.PageNumber - 1) * queryParams.PageSize;
+            return await services.Skip(skipNumber).Take(queryParams.PageSize).ToListAsync();
         }
 
         public async Task<Service?> GetByIdAsync(int id)
