@@ -1,8 +1,8 @@
-# Web API Anuncios
+# Ad Snap
 
 ## Sobre o projeto
 
-Esse projeto disponibiliza uma aplicação Web para cadastrar anuncios, persistindo os dados através de uma REST API utilizando .NET Core e o Entity Framework.
+Esse projeto disponibiliza uma aplicação Web para gestão de anuncios, persistindo os dados através de uma REST API utilizando .NET Core e o Entity Framework.
 ---
 
 ## Tecnologias utilizadas
